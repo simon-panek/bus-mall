@@ -12,5 +12,7 @@ This is a product research focus group app. It randomly presents the user with t
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 
+* The documentation provided for Chart.js was consulted extensively.
+
 ### Reflections and Comments
 

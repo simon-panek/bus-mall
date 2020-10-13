@@ -5,14 +5,15 @@ body {
 }
 
 header {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   height: 80px;
+  border-bottom: solid 5px slategray;
 }
 
 #logo{
   height: 80px;
   float: left;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   margin-right: 25px;
 }
 
@@ -20,7 +21,7 @@ header {
 h1 {
   font-family: 'Fredoka One', cursive;
   font-size: 500%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   height: 80px;
   width: 50%;
   float: left;
@@ -28,7 +29,7 @@ h1 {
 
 ul {
   display: inline-block;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   align-items: baseline;
 }
 
@@ -44,7 +45,7 @@ li {
 }
 
 #productTab {
-  background-color: darkgray;
+  background-color: lightgray;
 }
 
 #instructionMessage {
@@ -54,7 +55,7 @@ li {
 }
 
 #imgSection {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
@@ -74,10 +75,15 @@ li {
 #myChart {
   width: 200px;
   height: 200px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  /* background-image: linear-gradient(lightgray, darkslategray);
+  border: 2px solid black;
+  border-radius: 5px; */
 }
 
 #sectionButton {
-border: 1px solid black;
+/* border: 1px solid black; */
 display: flex;
 flex-wrap: nowrap;
 justify-content: center;
@@ -87,16 +93,24 @@ justify-content: center;
   width: 50%;
   height: 50px;
   font-size: 150%;
+  border: solid black 2px;
+  border-radius: 5px;
+  box-shadow: 5px 10px slategray;
 }
 
 #textField {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   margin-top: 4%;
   font-size: 150%;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   color: rgb(17, 17, 17);
 }
 
+#sectionResults > p {
+  color: whitesmoke;
+}
+
+
 footer {
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }

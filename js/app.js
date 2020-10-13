@@ -316,15 +316,24 @@ function generateChart(){ //creates a bar chart that displays votes and display 
       }]
     },
     options: {
+      legend: {
+        labels: {
+          fontColor: 'black'
+        }
+      },
       scales: {
         yAxes: [{
           stacked: true,
           ticks: {
-            beginAtZero: true
+            beginAtZero: true,
+            fontColor: 'black'
           }
         }],
         xAxes: [{
-          stacked: true
+          stacked: true,
+          ticks: {
+            fontColor: 'black'
+          }
         }]
       }
     }
