@@ -4,15 +4,16 @@
   <title>Bus Mall</title>
   <link rel="stylesheet" href="css/reset.css" type="text/css">
   <link rel="stylesheet" href="css/style.css" type="text/css">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
-    <img src="" alt="">
+    <img id="logo" src="img/bus-travel-bus-logo-vector-template_59362-91.jpg" alt="Bus Logo">
     <h1>Bus Mall</h1>
     <nav>
       <ul>
         <li>Home</li>
-        <li>Products</li>
+        <li id="productTab">Products</li>
         <li>About</li>
         <li>Contact</li>
       </ul>
@@ -20,22 +21,22 @@
   </header>
   <main>
     <section>
-      <p id="instructionMessage">Please select the item below that you would most like to purchase.</p>
+      <p id="instructionMessage">Please click on the item below that you would most like to purchase.</p>
     </section>
     <section id="imgSection">
-      <img id="imgOne" src="" alt="">
-      <img id="imgTwo" src="" alt="">
-      <img id="imgThree" src="" alt="">
+      <img class="productImage" id="imgOne" src="" alt="">
+      <img class="productImage" id="imgTwo" src="" alt="">
+      <img class="productImage" id="imgThree" src="" alt="">
     </section>
     <section id="sectionButton">
       <button id="resultsButton">View Results</button>
     </section>
     <section id="sectionResults"></section>
-    <section>
-      <p>Lorem Ipsum</p>
+    <section id="textField">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </section>
     <section>
-      <canvas id="myChart" width="200" height="200"></canvas>
+      <canvas id="myChart"></canvas>
     </section>
   </main>
   <footer>
