@@ -3,7 +3,7 @@
 // global variables ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // needed: array of objects, voting rounds
 
-var votingRounds = 25; //change this value to control the number of rounds to be run, 25 is default
+var votingRounds = 5; //change this value to control the number of rounds to be run, 25 is default
 var votingRoundTracker = 1; //keeps track of each round of voting, starts at 1 because the initial vote is populated at page load
 
 var allProducts = [];
@@ -145,27 +145,37 @@ resultsButton.addEventListener('click', finalTallyRender);
 
 function finalTallyRender(){ //renders final totals
 
-  for (var i=0; i<allProducts.length; i++){
+  /////////////////////////////////////////////////////////////////working but obsolete below///////////////////////////////////////////////////
 
-    var product = allProducts[i].productName;
-    var displayCount = allProducts[i].productDisplayCount;
-    var votes = allProducts[i].productVoteCount;
-    // var percentage = Math.round((votes / displayCount) * 100);
+  // for (var i=0; i<allProducts.length; i++){
 
-    // console.log('votes', votes, 'displayCount', displayCount, 'percentage', percentage);
 
-    // var outputString = `${product}  was shown  ${displayCount}  times and chosen  ${votes}  times. It was selected  ${percentage}  % of the times it was shown.`;
+  //   var product = allProducts[i].productName;
+  //   var displayCount = allProducts[i].productDisplayCount;
+  //   var votes = allProducts[i].productVoteCount;
+  //   // var percentage = Math.round((votes / displayCount) * 100);
 
-    var outputString = `${product} had ${votes} votes, and was seen ${displayCount} times.`;
+  //   // console.log('votes', votes, 'displayCount', displayCount, 'percentage', percentage);
 
-    console.log(outputString);
+  //   // var outputString = `${product}  was shown  ${displayCount}  times and chosen  ${votes}  times. It was selected  ${percentage}  % of the times it was shown.`;
 
-    var pElement = document.createElement('p');
-    pElement.textContent = outputString;
-    sectionResults.appendChild(pElement);
+  //   var outputString = `${product} had ${votes} votes, and was seen ${displayCount} times.`;
 
-  }
+  //   console.log(outputString);
+
+  //   var pElement = document.createElement('p');
+  //   pElement.textContent = outputString;
+  //   sectionResults.appendChild(pElement);
+
+  // }
+
+  ////////////////////////////////////////////////////////////////////working but obsolete above/////////////////////////////////////////////////
+
+  generateChart(); // calls function to generate chart
+
+
   resultsButton.removeEventListener ('click', finalTallyRender);
+
 }
 
 
@@ -174,3 +184,106 @@ function finalTallyRender(){ //renders final totals
 render(imageOneElement);
 render(imageTwoElement);
 render(imageThreeElement);
+
+//chart///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+function generateChart(){ //creates a bar chart that displays votes and display values for each product, should only appear after voting completes
+  var productNameArray = [];
+  var productDisplayCountArray = [];
+  var votesArray = [];
+  var percentageArray = [];
+
+  for (var i=0; i<allProducts.length; i++){
+
+    var product = allProducts[i].productName;
+    var displayCount = allProducts[i].productDisplayCount;
+    var votes = allProducts[i].productVoteCount;
+    var percentage = Math.round((votes / displayCount) * 100);
+
+    productNameArray.push(product);
+    productDisplayCountArray.push(displayCount);
+    votesArray.push(votes);
+    percentageArray.push(percentage);
+
+
+    //   // console.log('votes', votes, 'displayCount', displayCount, 'percentage', percentage);
+
+    //   // var outputString = `${product}  was shown  ${displayCount}  times and chosen  ${votes}  times. It was selected  ${percentage}  % of the times it was shown.`;
+
+    //   var outputString = `${product} had ${votes} votes, and was seen ${displayCount} times.`;
+
+    //   console.log(outputString);
+
+  //   var pElement = document.createElement('p');
+  //   pElement.textContent = outputString;
+  //   sectionResults.appendChild(pElement);
+  }
+
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, { 
+    type: 'bar',
+    data: {
+      labels: productNameArray, //horizontal axis labels
+      datasets: [{
+        label: '# of Votes',
+        data: votesArray, //votes received by each product
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+}
