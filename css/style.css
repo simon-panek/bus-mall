@@ -1,4 +1,116 @@
-img {
+body {
+  margin: 10%;
+  width: 80%;
+  background-image: linear-gradient(darkslategray, lightgray);
+}
+
+header {
+  /* border: 1px solid black; */
+  height: 80px;
+  border-bottom: solid 5px slategray;
+}
+
+#logo{
+  height: 80px;
+  float: left;
+  /* border: 1px solid black; */
+  margin-right: 25px;
+}
+
+
+h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 500%;
+  /* border: 1px solid black; */
+  height: 80px;
+  width: 50%;
+  float: left;
+}
+
+ul {
+  display: inline-block;
+  /* border: 1px solid black; */
+  align-items: baseline;
+}
+
+li {
+  border: 1px solid black;
+  display:  inline-block;
+  font-size: 200%;
+  padding: 5px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  height: 50px;
+  margin-top: 15px;
+}
+
+#productTab {
+  background-color: lightgray;
+}
+
+#instructionMessage {
+  font-size: 175%;
+  margin-top: 5%;
+  text-align: center;
+}
+
+#imgSection {
+  /* border: 1px solid black; */
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.productImage {
   max-width: 250px;
   max-height: 250px;
+  min-width: 250px;
+  min-height: 250px;
+  border: 5px solid black;
+  margin: 2.5%;
+
+}
+
+#myChart {
+  width: 200px;
+  height: 200px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  /* background-image: linear-gradient(lightgray, darkslategray);
+  border: 2px solid black;
+  border-radius: 5px; */
+}
+
+#sectionButton {
+/* border: 1px solid black; */
+display: flex;
+flex-wrap: nowrap;
+justify-content: center;
+}
+
+#resultsButton {
+  width: 50%;
+  height: 50px;
+  font-size: 150%;
+  border: solid black 2px;
+  border-radius: 5px;
+  box-shadow: 5px 10px slategray;
+}
+
+#textField {
+  /* border: 1px solid black; */
+  margin-top: 4%;
+  font-size: 150%;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: rgb(17, 17, 17);
+}
+
+#sectionResults > p {
+  color: whitesmoke;
+}
+
+
+footer {
+  /* border: 1px solid black; */
 }

@@ -145,27 +145,37 @@ resultsButton.addEventListener('click', finalTallyRender);
 
 function finalTallyRender(){ //renders final totals
 
-  for (var i=0; i<allProducts.length; i++){
+  /////////////////////////////////////////////////////////////////working but obsolete below///////////////////////////////////////////////////
 
-    var product = allProducts[i].productName;
-    var displayCount = allProducts[i].productDisplayCount;
-    var votes = allProducts[i].productVoteCount;
-    // var percentage = Math.round((votes / displayCount) * 100);
+  // for (var i=0; i<allProducts.length; i++){
 
-    // console.log('votes', votes, 'displayCount', displayCount, 'percentage', percentage);
 
-    // var outputString = `${product}  was shown  ${displayCount}  times and chosen  ${votes}  times. It was selected  ${percentage}  % of the times it was shown.`;
+  //   var product = allProducts[i].productName;
+  //   var displayCount = allProducts[i].productDisplayCount;
+  //   var votes = allProducts[i].productVoteCount;
+  //   // var percentage = Math.round((votes / displayCount) * 100);
 
-    var outputString = `${product} had ${votes} votes, and was seen ${displayCount} times.`;
+  //   // console.log('votes', votes, 'displayCount', displayCount, 'percentage', percentage);
 
-    console.log(outputString);
+  //   // var outputString = `${product}  was shown  ${displayCount}  times and chosen  ${votes}  times. It was selected  ${percentage}  % of the times it was shown.`;
 
-    var pElement = document.createElement('p');
-    pElement.textContent = outputString;
-    sectionResults.appendChild(pElement);
+  //   var outputString = `${product} had ${votes} votes, and was seen ${displayCount} times.`;
 
-  }
+  //   console.log(outputString);
+
+  //   var pElement = document.createElement('p');
+  //   pElement.textContent = outputString;
+  //   sectionResults.appendChild(pElement);
+
+  // }
+
+  ////////////////////////////////////////////////////////////////////working but obsolete above/////////////////////////////////////////////////
+
+  generateChart(); // calls function to generate chart
+
+
   resultsButton.removeEventListener ('click', finalTallyRender);
+
 }
 
 
@@ -174,3 +184,158 @@ function finalTallyRender(){ //renders final totals
 render(imageOneElement);
 render(imageTwoElement);
 render(imageThreeElement);
+
+//chart///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+function generateChart(){ //creates a bar chart that displays votes and display values for each product, should only appear after voting completes
+  var productNameArray = []; //array of all product names
+  var productDisplayCountArray = []; //array of all product display counts
+  var votesArray = []; //array of all votes per product
+  var percentageArray = []; //percentage of times a product was selected when displayed
+  var differenceVotesDisplayArray = []; //stores the value of total displays minus the votes received by a product
+
+  for (var i=0; i<allProducts.length; i++){
+
+    var product = allProducts[i].productName;
+    var displayCount = allProducts[i].productDisplayCount;
+    var votes = allProducts[i].productVoteCount;
+    var percentage = Math.round((votes / displayCount) * 100);
+
+    productNameArray.push(product);
+    productDisplayCountArray.push(displayCount);
+    votesArray.push(votes);
+    percentageArray.push(percentage);
+
+    differenceVotesDisplayArray.push(allProducts[i].productDisplayCount - allProducts[i].productVoteCount);
+  }
+
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, { 
+    type: 'bar',
+    data: {
+      labels: productNameArray, //horizontal axis labels
+      datasets: [{
+        label: '# of Votes',
+        data: votesArray, //votes received by each product
+        backgroundColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)'
+        ],
+        borderWidth: 2
+      },
+      {
+        label: '# of Times Shown but Not Selected',
+        data: differenceVotesDisplayArray, //times shown - votes received
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, .8)',
+          'rgba(54, 162, 235, .8)',
+          'rgba(255, 206, 86, .8)',
+          'rgba(75, 192, 192, .8)',
+          'rgba(153, 102, 255, .8)',
+          'rgba(255, 159, 64, .8)',
+          'rgba(255, 99, 132, .8)',
+          'rgba(54, 162, 235, .8)',
+          'rgba(255, 206, 86, .8)',
+          'rgba(75, 192, 192, .8)',
+          'rgba(153, 102, 255, .8)',
+          'rgba(255, 159, 64, .8)',
+          'rgba(255, 99, 132, .8)',
+          'rgba(54, 162, 235, .8)',
+          'rgba(255, 206, 86, .8)',
+          'rgba(75, 192, 192, .8)',
+          'rgba(153, 102, 255, .8)',
+          'rgba(255, 159, 64, .8)',
+          'rgba(255, 99, 132, .8)',
+          'rgba(54, 162, 235, .8)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      legend: {
+        labels: {
+          fontColor: 'black'
+        }
+      },
+      scales: {
+        yAxes: [{
+          stacked: true,
+          ticks: {
+            beginAtZero: true,
+            fontColor: 'black'
+          }
+        }],
+        xAxes: [{
+          stacked: true,
+          ticks: {
+            fontColor: 'black'
+          }
+        }]
+      }
+    }
+  });
+}
