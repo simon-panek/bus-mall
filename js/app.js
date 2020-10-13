@@ -3,7 +3,7 @@
 // global variables ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // needed: array of objects, voting rounds
 
-var votingRounds = 25; //change this value to control the number of rounds to be run, 25 is default
+var votingRounds = 5; //change this value to control the number of rounds to be run, 25 is default
 var votingRoundTracker = 1; //keeps track of each round of voting, starts at 1 because the initial vote is populated at page load
 
 var allProducts = [];
@@ -11,8 +11,11 @@ var allProducts = [];
 var imageOneElement = document.getElementById('imgOne');
 var imageTwoElement = document.getElementById('imgTwo');
 var imageThreeElement = document.getElementById('imgThree');
+
 var imageSection = document.getElementById('imgSection');
 var sectionResults = document.getElementById('imgSection');
+var resultsButton = document.getElementById('resultsButton');
+var sectionInstruction = document.getElementById('instructionMessage');
 
 var randomNumberTracker = [];
 // var randomCombinationTracker =[];
@@ -122,14 +125,23 @@ imageSection.addEventListener('click', function(event){ // listens for click the
     votingRoundTracker++;
 
   } else {
-    // this is where to output final scores
+    sectionInstruction.innerHTML = '';
+    var pElement = document.createElement('p');
+    pElement.textContent = 'Thank you for your input. Please press the View Results button.';
+    sectionInstruction.appendChild (pElement);
 
-    //finalyTallyRender() should be run in a different function that is triggered by the Results button
-    finalTallyRender();
+    imageSection.removeEventListener; // stops event listener
+    // this is where to output final scores
+    //finalTallyRender() should be run in a different function that is triggered by the Results button
+    //finalTallyRender();
   }
 });
 
-console.log('after listener', allProducts);
+//renders the final tallies for all products
+
+resultsButton.addEventListener('click', finalTallyRender);
+
+// console.log('after listener', allProducts);
 
 function finalTallyRender(){ //renders final totals
 
@@ -138,12 +150,13 @@ function finalTallyRender(){ //renders final totals
     var product = allProducts[i].productName;
     var displayCount = allProducts[i].productDisplayCount;
     var votes = allProducts[i].productVoteCount;
-    var percentage = Math.round((votes / displayCount) * 100);
+    // var percentage = Math.round((votes / displayCount) * 100);
 
+    // console.log('votes', votes, 'displayCount', displayCount, 'percentage', percentage);
 
-    console.log('votes', votes, 'displayCount', displayCount, 'percentage', percentage);
+    // var outputString = `${product}  was shown  ${displayCount}  times and chosen  ${votes}  times. It was selected  ${percentage}  % of the times it was shown.`;
 
-    var outputString = `${product}  was shown  ${displayCount}  times and chosen  ${votes}  times. It was selected  ${percentage}  % of the times it was shown.`;
+    var outputString = `${product} had ${votes} votes, and was seen ${displayCount} times.`;
 
     console.log(outputString);
 
@@ -152,7 +165,9 @@ function finalTallyRender(){ //renders final totals
     sectionResults.appendChild(pElement);
 
   }
+  resultsButton.removeEventListener ('click', finalTallyRender);
 }
+
 
 //executables//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
