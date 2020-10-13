@@ -3,7 +3,7 @@
 // global variables ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // needed: array of objects, voting rounds
 
-var votingRounds = 5; //change this value to control the number of rounds to be run, 25 is default
+var votingRounds = 25; //change this value to control the number of rounds to be run, 25 is default
 var votingRoundTracker = 1; //keeps track of each round of voting, starts at 1 because the initial vote is populated at page load
 
 var allProducts = [];
@@ -82,8 +82,8 @@ function render(imageElement){
 
   allProducts[randomIndexPosition].productDisplayCount ++;
 
-  if (randomNumberTracker.length > 2){
-    randomNumberTracker= [];
+  if (randomNumberTracker.length > 5){
+    randomNumberTracker.shift();
   }
 
   randomNumberTracker.push(randomIndexPosition);
