@@ -3,7 +3,7 @@
 // global variables ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // needed: array of objects, voting rounds
 
-var votingRounds = 5; //change this value to control the number of rounds to be run, 25 is default
+var votingRounds = 25; //change this value to control the number of rounds to be run, 25 is default
 var votingRoundTracker = 1; //keeps track of each round of voting, starts at 1 because the initial vote is populated at page load
 
 var allProducts = [];
@@ -190,10 +190,11 @@ render(imageThreeElement);
 
 
 function generateChart(){ //creates a bar chart that displays votes and display values for each product, should only appear after voting completes
-  var productNameArray = [];
-  var productDisplayCountArray = [];
-  var votesArray = [];
-  var percentageArray = [];
+  var productNameArray = []; //array of all product names
+  var productDisplayCountArray = []; //array of all product display counts
+  var votesArray = []; //array of all votes per product
+  var percentageArray = []; //percentage of times a product was selected when displayed
+  var differenceVotesDisplayArray = []; //stores the value of total displays minus the votes received by a product
 
   for (var i=0; i<allProducts.length; i++){
 
@@ -207,18 +208,7 @@ function generateChart(){ //creates a bar chart that displays votes and display 
     votesArray.push(votes);
     percentageArray.push(percentage);
 
-
-    //   // console.log('votes', votes, 'displayCount', displayCount, 'percentage', percentage);
-
-    //   // var outputString = `${product}  was shown  ${displayCount}  times and chosen  ${votes}  times. It was selected  ${percentage}  % of the times it was shown.`;
-
-    //   var outputString = `${product} had ${votes} votes, and was seen ${displayCount} times.`;
-
-    //   console.log(outputString);
-
-  //   var pElement = document.createElement('p');
-  //   pElement.textContent = outputString;
-  //   sectionResults.appendChild(pElement);
+    differenceVotesDisplayArray.push(allProducts[i].productDisplayCount - allProducts[i].productVoteCount);
   }
 
   var ctx = document.getElementById('myChart').getContext('2d');
@@ -230,26 +220,26 @@ function generateChart(){ //creates a bar chart that displays votes and display 
         label: '# of Votes',
         data: votesArray, //votes received by each product
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
@@ -273,15 +263,68 @@ function generateChart(){ //creates a bar chart that displays votes and display 
           'rgba(255, 99, 132, 1)',
           'rgba(54, 162, 235, 1)'
         ],
+        borderWidth: 2
+      },
+      {
+        label: '# of Times Shown but Not Selected',
+        data: differenceVotesDisplayArray, //times shown - votes received
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, .8)',
+          'rgba(54, 162, 235, .8)',
+          'rgba(255, 206, 86, .8)',
+          'rgba(75, 192, 192, .8)',
+          'rgba(153, 102, 255, .8)',
+          'rgba(255, 159, 64, .8)',
+          'rgba(255, 99, 132, .8)',
+          'rgba(54, 162, 235, .8)',
+          'rgba(255, 206, 86, .8)',
+          'rgba(75, 192, 192, .8)',
+          'rgba(153, 102, 255, .8)',
+          'rgba(255, 159, 64, .8)',
+          'rgba(255, 99, 132, .8)',
+          'rgba(54, 162, 235, .8)',
+          'rgba(255, 206, 86, .8)',
+          'rgba(75, 192, 192, .8)',
+          'rgba(153, 102, 255, .8)',
+          'rgba(255, 159, 64, .8)',
+          'rgba(255, 99, 132, .8)',
+          'rgba(54, 162, 235, .8)'
+        ],
         borderWidth: 1
       }]
     },
     options: {
       scales: {
         yAxes: [{
+          stacked: true,
           ticks: {
             beginAtZero: true
           }
+        }],
+        xAxes: [{
+          stacked: true
         }]
       }
     }
