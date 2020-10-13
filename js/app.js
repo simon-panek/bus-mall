@@ -12,9 +12,10 @@ var imageOneElement = document.getElementById('imgOne');
 var imageTwoElement = document.getElementById('imgTwo');
 var imageThreeElement = document.getElementById('imgThree');
 var imageSection = document.getElementById('imgSection');
+var sectionResults = document.getElementById('imgSection');
 
 var randomNumberTracker = [];
-var randomCombinationTracker =[];
+// var randomCombinationTracker =[];
 
 
 // constructor function with name of product and filePath parameters//////////////////////////////////////////////////////
@@ -69,7 +70,7 @@ function render(imageElement){
   imageElement.src = allProducts[randomIndexPosition].imgFilePath;
   imageElement.alt = allProducts[randomIndexPosition].productName;
 
-  Product.productDisplayCount ++;
+  allProducts[randomIndexPosition].productDisplayCount ++;
 
   for (var i=2; i<randomNumberTracker.length; i++){ //clear random number variables beyond index position 1
     randomNumberTracker.pop();
@@ -109,10 +110,34 @@ imageSection.addEventListener('click', function(event){ // listens for click the
 
   } else {
     // this is where to output final scores
+    finalTallyRender();
   }
 });
 
 console.log('after listener', allProducts);
+
+function finalTallyRender(){ //renders final totals
+
+  for (var i=0; i<allProducts.length; i++){
+
+    var product = allProducts[i].productName;
+    var displayCount = allProducts[i].productDisplayCount;
+    var votes = allProducts[i].productVoteCount;
+    var percentage = Math.round((votes / displayCount) * 100);
+
+
+    console.log('votes', votes, 'displayCount', displayCount, 'percentage', percentage);
+
+    var outputString = `${product}  was shown  ${displayCount}  times and chosen  ${votes}  times. It was selected  ${percentage}  % of the times it was shown.`;
+
+    console.log(outputString);
+
+    var pElement = document.createElement('p');
+    pElement.textContent = outputString;
+    sectionResults.appendChild(pElement);
+
+  }
+}
 
 //executables//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
