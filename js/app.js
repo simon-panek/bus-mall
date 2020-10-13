@@ -17,6 +17,8 @@ var sectionResults = document.getElementById('imgSection');
 var randomNumberTracker = [];
 // var randomCombinationTracker =[];
 
+var mostRecentSet = [];
+var runningRecord = [];
 
 // constructor function with name of product and filePath parameters//////////////////////////////////////////////////////
 
@@ -28,6 +30,7 @@ function Product(productName, imgFilePath, imageNumber){
 
   this.productVoteCount = 0;
   this.productDisplayCount = 0;
+
 
   allProducts.push(this);
 }
@@ -57,11 +60,12 @@ new Product('usb', 'img/usb.gif', 18);
 new Product('water-can', 'img/water-can.jpg', 19);
 new Product('wine-glass', 'img/wine-glass.jpg', 20);
 
-//prototypes//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//funtions//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //random picture render
 function render(imageElement){
   var randomIndexPosition = randomNumberGenerator (0, allProducts.length-1);
+
 
   while(randomNumberTracker.includes(randomIndexPosition)){
     randomIndexPosition = randomNumberGenerator (0, allProducts.length-1);
@@ -70,18 +74,18 @@ function render(imageElement){
   imageElement.src = allProducts[randomIndexPosition].imgFilePath;
   imageElement.alt = allProducts[randomIndexPosition].productName;
 
+  mostRecentSet.push(imageElement.alt); //records each set of images printed to the screen
+  // console.log('mostRecentSet', mostRecentSet);
+
   allProducts[randomIndexPosition].productDisplayCount ++;
 
-  for (var i=2; i<randomNumberTracker.length; i++){ //clear random number variables beyond index position 1
-    randomNumberTracker.pop();
+  if (randomNumberTracker.length > 2){
+    randomNumberTracker= [];
   }
 
   randomNumberTracker.push(randomIndexPosition);
 
 }
-
-
-// helper functions/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // random number generator
 
@@ -94,11 +98,20 @@ function randomNumberGenerator(min, max){
 
 imageSection.addEventListener('click', function(event){ // listens for click then runs function
   if(votingRoundTracker < votingRounds+1){
+
+    var chosenProduct = event.target.alt; //declares variable to store which picture was clicked on to increase appropriate vote count
+    // console.log(event.target);
+    // console.log(event.target.alt);
+    // console.log(chosenProduct);
+
+    runningRecord.push(mostRecentSet); //keeps a running record of all images shown to the screen
+    // console.log('runningRecord', runningRecord);
+    mostRecentSet = [];
+
     render(imageOneElement);
     render(imageTwoElement);
     render(imageThreeElement);
 
-    var chosenProduct = event.target.alt; //declares variable to store which picture was clicked on to increase appropriate vote count
 
     for (var i=0; i<allProducts.length; i++){
       if(chosenProduct === allProducts[i].productName){
@@ -110,6 +123,8 @@ imageSection.addEventListener('click', function(event){ // listens for click the
 
   } else {
     // this is where to output final scores
+
+    //finalyTallyRender() should be run in a different function that is triggered by the Results button
     finalTallyRender();
   }
 });
