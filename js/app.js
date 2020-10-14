@@ -4,7 +4,7 @@
 // needed: array of objects, voting rounds
 
 var votingRounds = 25; //change this value to control the number of rounds to be run, 25 is default
-var votingRoundTracker = 1; //keeps track of each round of voting, starts at 1 because the initial vote is populated at page load
+var votingRoundTracker = 0; //keeps track of each round of voting, starts at 1 because the initial vote is populated at page load
 
 var allProducts = [];
 
@@ -40,19 +40,18 @@ function localStorageCheck() {
 
       new Product(parsedAllProducts[i].productName, parsedAllProducts[i].imgFilePath, parsedAllProducts[i].productVoteCount, parsedAllProducts[i].productDisplayCount);
 
-      console.log('parsedAllProducts[i].productName', parsedAllProducts[i].productName);
-      console.log('parsedAllProducts[i].imgFilePath', parsedAllProducts[i].imgFilePath);
-      console.log('parsedAllProducts[i].productVoteCount', parsedAllProducts[i].productVoteCount);
-      console.log('parsedAllProducts[i].productDisplayCount', parsedAllProducts[i].productDisplayCount);
+      // console.log('parsedAllProducts[i].productName', parsedAllProducts[i].productName);
+      // console.log('parsedAllProducts[i].imgFilePath', parsedAllProducts[i].imgFilePath);
+      // console.log('parsedAllProducts[i].productVoteCount', parsedAllProducts[i].productVoteCount);
+      // console.log('parsedAllProducts[i].productDisplayCount', parsedAllProducts[i].productDisplayCount);
 
     }
 
-    console.log('allProducts after creating new instances from storage', allProducts);
+    // console.log('allProducts after creating new instances from storage', allProducts);
 
   } else { //add new instances
     generateNewInstances();
   }
-
 
 }
 
@@ -99,7 +98,7 @@ function generateNewInstances(){
   new Product('water-can', 'img/water-can.jpg');
   new Product('wine-glass', 'img/wine-glass.jpg');
 }
-  
+
 //funtions//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //random picture render
@@ -148,10 +147,6 @@ imageSection.addEventListener('click', function(event){ // listens for click the
     // console.log('runningRecord', runningRecord);
     mostRecentSet = [];
 
-    render(imageOneElement);
-    render(imageTwoElement);
-    render(imageThreeElement);
-
 
     for (var i=0; i<allProducts.length; i++){
       if(chosenProduct === allProducts[i].productName){
@@ -161,16 +156,22 @@ imageSection.addEventListener('click', function(event){ // listens for click the
 
     votingRoundTracker++;
 
-  } else {
-    sectionInstruction.innerHTML = '';
-    var pElement = document.createElement('p');
-    pElement.textContent = 'Thank you for your input. Please press the View Results button.';
-    sectionInstruction.appendChild (pElement);
+    if (votingRoundTracker >= votingRounds) {
+      sectionInstruction.innerHTML = '';
+      var pElement = document.createElement('p');
+      pElement.textContent = 'Thank you for your input. Please press the View Results button.';
+      sectionInstruction.appendChild (pElement);
 
-    imageSection.removeEventListener; // stops event listener
-    // this is where to output final scores
-    //finalTallyRender() should be run in a different function that is triggered by the Results button
-    //finalTallyRender();
+      imageSection.removeEventListener; // stops event listener
+      // this is where to output final scores
+      //finalTallyRender() should be run in a different function that is triggered by the Results button
+      //finalTallyRender();
+    } else {
+      render(imageOneElement);
+      render(imageTwoElement);
+      render(imageThreeElement);
+    }
+
   }
 
   var stringifyAllProducts = JSON.stringify(allProducts); // prep array for storage
