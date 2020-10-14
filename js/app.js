@@ -23,16 +23,49 @@ var randomNumberTracker = [];
 var mostRecentSet = [];
 var runningRecord = [];
 
-// constructor function with name of product and filePath parameters//////////////////////////////////////////////////////
+// local storage check /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function Product(productName, imgFilePath, imageNumber){
+function localStorageCheck() {
+  var productsFromLocalStorage = localStorage.getItem('allProducts');
+
+  if (productsFromLocalStorage)
+  {
+
+    var parsedAllProducts = JSON.parse(productsFromLocalStorage);
+
+    console.log('parsedAllProducts from storage', parsedAllProducts);
+    //create instances for each of the parsed in products
+
+    for ( var i=0; i<parsedAllProducts.length; i++){
+
+      new Product(parsedAllProducts[i].productName, parsedAllProducts[i].imgFilePath, parsedAllProducts[i].productVoteCount, parsedAllProducts[i].productDisplayCount);
+
+      console.log('parsedAllProducts[i].productName', parsedAllProducts[i].productName);
+      console.log('parsedAllProducts[i].imgFilePath', parsedAllProducts[i].imgFilePath);
+      console.log('parsedAllProducts[i].productVoteCount', parsedAllProducts[i].productVoteCount);
+      console.log('parsedAllProducts[i].productDisplayCount', parsedAllProducts[i].productDisplayCount);
+
+    }
+
+    console.log('allProducts after creating new instances from storage', allProducts);
+
+  } else { //add new instances
+    generateNewInstances();
+  }
+
+
+}
+
+
+// constructor function ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function Product(productName, imgFilePath, productVoteCount = 0, productDisplayCount = 0){
 
   this.productName = productName;
   this.imgFilePath = imgFilePath;
-  this.imageNumber = imageNumber;
 
-  this.productVoteCount = 0;
-  this.productDisplayCount = 0;
+  this.productVoteCount = productVoteCount;
+  this.productDisplayCount = productDisplayCount;
 
 
   allProducts.push(this);
@@ -40,29 +73,33 @@ function Product(productName, imgFilePath, imageNumber){
 
 console.log(allProducts);
 
-//instances//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//new instances//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-new Product('bag', 'img/bag.jpg', 1);
-new Product('banana', 'img/banana.jpg', 2);
-new Product('bathroom', 'img/bathroom.jpg', 3);
-new Product('boots', 'img/boots.jpg', 4);
-new Product('breakfast.jpg', 'img/breakfast.jpg', 5);
-new Product('bubblegum', 'img/bubblegum.jpg', 6);
-new Product('chair', 'img/chair.jpg', 7);
-new Product('cthulhu', 'img/cthulhu.jpg', 8);
-new Product('dog-duck', 'img/dog-duck.jpg', 9);
-new Product('dragon', 'img/dragon.jpg', 10);
-new Product('pen', 'img/pen.jpg', 11);
-new Product('pet-sweep', 'img/pet-sweep.jpg', 12);
-new Product('scissors', 'img/scissors.jpg', 13);
-new Product('shark', 'img/shark.jpg', 14);
-new Product('sweep', 'img/sweep.png', 15);
-new Product('tauntaun', 'img/tauntaun.jpg', 16);
-new Product('unicorn', 'img/unicorn.jpg', 17);
-new Product('usb', 'img/usb.gif', 18);
-new Product('water-can', 'img/water-can.jpg', 19);
-new Product('wine-glass', 'img/wine-glass.jpg', 20);
 
+function generateNewInstances(){
+
+  new Product('bag', 'img/bag.jpg');
+  new Product('banana', 'img/banana.jpg');
+  new Product('bathroom', 'img/bathroom.jpg');
+  new Product('boots', 'img/boots.jpg');
+  new Product('breakfast.jpg', 'img/breakfast.jpg');
+  new Product('bubblegum', 'img/bubblegum.jpg');
+  new Product('chair', 'img/chair.jpg');
+  new Product('cthulhu', 'img/cthulhu.jpg');
+  new Product('dog-duck', 'img/dog-duck.jpg');
+  new Product('dragon', 'img/dragon.jpg');
+  new Product('pen', 'img/pen.jpg');
+  new Product('pet-sweep', 'img/pet-sweep.jpg');
+  new Product('scissors', 'img/scissors.jpg');
+  new Product('shark', 'img/shark.jpg');
+  new Product('sweep', 'img/sweep.png');
+  new Product('tauntaun', 'img/tauntaun.jpg');
+  new Product('unicorn', 'img/unicorn.jpg');
+  new Product('usb', 'img/usb.gif');
+  new Product('water-can', 'img/water-can.jpg');
+  new Product('wine-glass', 'img/wine-glass.jpg');
+}
+  
 //funtions//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //random picture render
@@ -135,6 +172,10 @@ imageSection.addEventListener('click', function(event){ // listens for click the
     //finalTallyRender() should be run in a different function that is triggered by the Results button
     //finalTallyRender();
   }
+
+  var stringifyAllProducts = JSON.stringify(allProducts); // prep array for storage
+  localStorage.setItem('allProducts', stringifyAllProducts); // push to local storage
+
 });
 
 //renders the final tallies for all products
@@ -173,6 +214,7 @@ function finalTallyRender(){ //renders final totals
 
   generateChart(); // calls function to generate chart
 
+  votingRoundTracker = votingRounds + 2; // Prevents further image loads after pressing the view results button
 
   resultsButton.removeEventListener ('click', finalTallyRender);
 
@@ -181,6 +223,7 @@ function finalTallyRender(){ //renders final totals
 
 //executables//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+localStorageCheck();
 render(imageOneElement);
 render(imageTwoElement);
 render(imageThreeElement);
@@ -212,7 +255,7 @@ function generateChart(){ //creates a bar chart that displays votes and display 
   }
 
   var ctx = document.getElementById('myChart').getContext('2d');
-  var myChart = new Chart(ctx, { 
+  var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: productNameArray, //horizontal axis labels
