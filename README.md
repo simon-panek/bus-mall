@@ -4,6 +4,8 @@
 
 This is a product research focus group app. It randomly presents the user with three product pictures and asks that the user clicks on their most likely purchase. Another set of pictures is then rendered to the screen and the process repeats 25 times. Upon completing the total views and votes for each product are displayed.
 
+Updated 10/14/20: This app now utilizes local storage so that user data is stored beyond a single session.
+
 ### Author: Simon Panek
 
 ### Links and Resources
