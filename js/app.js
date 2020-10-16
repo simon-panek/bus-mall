@@ -13,7 +13,6 @@ var imageTwoElement = document.getElementById('imgTwo');
 var imageThreeElement = document.getElementById('imgThree');
 
 var imageSection = document.getElementById('imgSection');
-var sectionResults = document.getElementById('imgSection');
 var resultsButton = document.getElementById('resultsButton');
 var sectionInstruction = document.getElementById('instructionMessage');
 
@@ -40,21 +39,13 @@ function localStorageCheck() {
 
       new Product(parsedAllProducts[i].productName, parsedAllProducts[i].imgFilePath, parsedAllProducts[i].productVoteCount, parsedAllProducts[i].productDisplayCount);
 
-      // console.log('parsedAllProducts[i].productName', parsedAllProducts[i].productName);
-      // console.log('parsedAllProducts[i].imgFilePath', parsedAllProducts[i].imgFilePath);
-      // console.log('parsedAllProducts[i].productVoteCount', parsedAllProducts[i].productVoteCount);
-      // console.log('parsedAllProducts[i].productDisplayCount', parsedAllProducts[i].productDisplayCount);
-
     }
-
-    // console.log('allProducts after creating new instances from storage', allProducts);
 
   } else { //add new instances
     generateNewInstances();
   }
 
 }
-
 
 // constructor function ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -66,14 +57,10 @@ function Product(productName, imgFilePath, productVoteCount = 0, productDisplayC
   this.productVoteCount = productVoteCount;
   this.productDisplayCount = productDisplayCount;
 
-
   allProducts.push(this);
 }
 
-console.log(allProducts);
-
 //new instances//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 function generateNewInstances(){
 
@@ -105,7 +92,6 @@ function generateNewInstances(){
 function render(imageElement){
   var randomIndexPosition = randomNumberGenerator (0, allProducts.length-1);
 
-
   while(randomNumberTracker.includes(randomIndexPosition)){
     randomIndexPosition = randomNumberGenerator (0, allProducts.length-1);
   }
@@ -114,7 +100,6 @@ function render(imageElement){
   imageElement.alt = allProducts[randomIndexPosition].productName;
 
   mostRecentSet.push(imageElement.alt); //records each set of images printed to the screen
-  // console.log('mostRecentSet', mostRecentSet);
 
   allProducts[randomIndexPosition].productDisplayCount ++;
 
@@ -139,14 +124,10 @@ imageSection.addEventListener('click', function(event){ // listens for click the
   if(votingRoundTracker < votingRounds+1){
 
     var chosenProduct = event.target.alt; //declares variable to store which picture was clicked on to increase appropriate vote count
-    // console.log(event.target);
-    // console.log(event.target.alt);
-    // console.log(chosenProduct);
 
     runningRecord.push(mostRecentSet); //keeps a running record of all images shown to the screen
-    // console.log('runningRecord', runningRecord);
-    mostRecentSet = [];
 
+    mostRecentSet = [];
 
     for (var i=0; i<allProducts.length; i++){
       if(chosenProduct === allProducts[i].productName){
@@ -163,9 +144,7 @@ imageSection.addEventListener('click', function(event){ // listens for click the
       sectionInstruction.appendChild (pElement);
 
       imageSection.removeEventListener; // stops event listener
-      // this is where to output final scores
-      //finalTallyRender() should be run in a different function that is triggered by the Results button
-      //finalTallyRender();
+
     } else {
       render(imageOneElement);
       render(imageTwoElement);
@@ -183,35 +162,7 @@ imageSection.addEventListener('click', function(event){ // listens for click the
 
 resultsButton.addEventListener('click', finalTallyRender);
 
-// console.log('after listener', allProducts);
-
 function finalTallyRender(){ //renders final totals
-
-  /////////////////////////////////////////////////////////////////working but obsolete below///////////////////////////////////////////////////
-
-  // for (var i=0; i<allProducts.length; i++){
-
-
-  //   var product = allProducts[i].productName;
-  //   var displayCount = allProducts[i].productDisplayCount;
-  //   var votes = allProducts[i].productVoteCount;
-  //   // var percentage = Math.round((votes / displayCount) * 100);
-
-  //   // console.log('votes', votes, 'displayCount', displayCount, 'percentage', percentage);
-
-  //   // var outputString = `${product}  was shown  ${displayCount}  times and chosen  ${votes}  times. It was selected  ${percentage}  % of the times it was shown.`;
-
-  //   var outputString = `${product} had ${votes} votes, and was seen ${displayCount} times.`;
-
-  //   console.log(outputString);
-
-  //   var pElement = document.createElement('p');
-  //   pElement.textContent = outputString;
-  //   sectionResults.appendChild(pElement);
-
-  // }
-
-  ////////////////////////////////////////////////////////////////////working but obsolete above/////////////////////////////////////////////////
 
   generateChart(); // calls function to generate chart
 
@@ -221,7 +172,6 @@ function finalTallyRender(){ //renders final totals
 
 }
 
-
 //executables//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 localStorageCheck();
@@ -230,8 +180,6 @@ render(imageTwoElement);
 render(imageThreeElement);
 
 //chart///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 function generateChart(){ //creates a bar chart that displays votes and display values for each product, should only appear after voting completes
   var productNameArray = []; //array of all product names
